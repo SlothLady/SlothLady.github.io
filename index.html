@@ -41,14 +41,9 @@
                     <p id="fileName" class="text-gray-400">Drag & drop or click to select a file</p>
                 </div>
             </div>
-
-            <button id="convertBtn" class="w-full bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-indigo-700 disabled:bg-gray-500 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800" disabled>
-                Convert and View
-            </button>
-
             <div id="results" class="hidden space-y-4">
                 <h2 class="text-xl font-semibold text-white">Conversion Complete</h2>
-                <p class="text-gray-400">Your OBJ file is ready for download and viewing.</p>
+                <p class="text-gray-400">Your OBJ file is ready for saving and viewing.</p>
                 <div id="download-container" class="grid grid-cols-1 gap-4"></div>
             </div>
              <div id="viewer-container">
@@ -68,7 +63,6 @@
         // --- DOM Elements ---
         const fileInput = document.getElementById('fileInput');
         const fileNameDisplay = document.getElementById('fileName');
-        const convertBtn = document.getElementById('convertBtn');
         const resultsDiv = document.getElementById('results');
         const downloadContainer = document.getElementById('download-container');
         const logOutput = document.getElementById('log');
@@ -79,10 +73,8 @@
             const file = e.target.files[0];
             if (file) {
                 fileNameDisplay.textContent = file.name;
-                convertBtn.disabled = false;
             } else {
                 fileNameDisplay.textContent = 'Drag & drop or click to select a file';
-                convertBtn.disabled = true;
             }
         });
 
@@ -94,7 +86,7 @@
         }
 
         // --- Conversion Logic ---
-        convertBtn.addEventListener('click', async () => {
+        fileInput.addEventListener('change', async () => {
             const file = fileInput.files[0];
             if (!file) return;
 
@@ -257,7 +249,7 @@
             const a = document.createElement('a');
             a.href = url;
             a.download = filename;
-            a.textContent = `Download ${filename}`;
+            a.textContent = `Save ${filename}`;
             a.className = "block text-center bg-green-600 text-white font-semibold py-2 px-3 rounded-lg hover:bg-green-700 transition-colors";
             downloadContainer.innerHTML = '';
             downloadContainer.appendChild(a);
